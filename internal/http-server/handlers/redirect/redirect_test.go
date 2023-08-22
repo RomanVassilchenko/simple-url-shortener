@@ -1,6 +1,18 @@
 package redirect_test
 
-import "testing"
+import (
+	"net/http/httptest"
+	"testing"
+
+	"github.com/go-chi/chi/v5"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
+	"simple-url-shortener/internal/http-server/handlers/redirect"
+	"simple-url-shortener/internal/http-server/handlers/redirect/mocks"
+	"simple-url-shortener/internal/lib/api"
+	"simple-url-shortener/internal/lib/logger/handlers/slogdiscard"
+)
 
 func TestRedirectHandler(t *testing.T) {
 	cases := []struct {
@@ -17,6 +29,26 @@ func TestRedirectHandler(t *testing.T) {
 		},
 	}
 
-	//TODO Add Redirect tests
-	_ = cases
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			urlGetterMock := mocks.NewURLGetter(t)
+
+			if tc.respError == "" || tc.mockError != nil {
+				urlGetterMock.On("GetURL", tc.alias).Return(tc.url, tc.mockError).Once()
+			}
+
+			r := chi.NewRouter()
+
+			r.Get("/{alias}", redirect.New(slogdiscard.NewDiscardLogger(), urlGetterMock))
+
+			ts := httptest.NewServer(r)
+			defer ts.Close()
+
+			redirectedToURL, err := api.GetRedirect(ts.URL + "/" + tc.alias)
+			require.NoError(t, err)
+
+			// Check the final URL after redirection
+			assert.Equal(t, tc.url, redirectedToURL)
+		})
+	}
 }
