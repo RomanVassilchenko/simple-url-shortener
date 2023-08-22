@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/simple-url-shortener.iml" filepath="$PROJECT_DIR$/.idea/simple-url-shortener.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../url-shortener/.idea/url-shortener.iml" filepath="$PROJECT_DIR$/../url-shortener/.idea/url-shortener.iml" />
     </modules>
   </component>
 </project>
