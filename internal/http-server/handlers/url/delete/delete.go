@@ -48,6 +48,7 @@ func New(log *slog.Logger, urlDeleter URLDeleter) http.HandlerFunc {
 		if errors.Is(err, storage.ErrURLNotFound) {
 			log.Info("alias not found", "alias", alias)
 
+			w.WriteHeader(http.StatusNotFound)
 			render.JSON(w, r, resp.Error("not found"))
 
 			return
@@ -56,6 +57,7 @@ func New(log *slog.Logger, urlDeleter URLDeleter) http.HandlerFunc {
 		if err != nil {
 			log.Error("failed to remove alias", sl.Err(err))
 
+			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, resp.Error("internal error"))
 
 			return
@@ -63,12 +65,12 @@ func New(log *slog.Logger, urlDeleter URLDeleter) http.HandlerFunc {
 
 		log.Info("removed alias", slog.String("alias", alias))
 
-		responseOK(w, r, alias)
+		responseOK(w, r)
 	}
 
 }
 
-func responseOK(w http.ResponseWriter, r *http.Request, alias string) {
+func responseOK(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, Response{
 		Response: resp.OK(),
 	})

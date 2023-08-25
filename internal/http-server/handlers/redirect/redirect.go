@@ -38,6 +38,8 @@ func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
 		if errors.Is(err, storage.ErrURLNotFound) {
 			log.Info("url not found", "alias", alias)
 
+			w.WriteHeader(http.StatusNotFound)
+
 			render.JSON(w, r, resp.Error("not found"))
 
 			return
@@ -46,6 +48,7 @@ func New(log *slog.Logger, urlGetter URLGetter) http.HandlerFunc {
 		if err != nil {
 			log.Error("failed to get url", sl.Err(err))
 
+			w.WriteHeader(http.StatusInternalServerError)
 			render.JSON(w, r, resp.Error("internal error"))
 
 			return

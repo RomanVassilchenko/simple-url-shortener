@@ -38,7 +38,6 @@ func TestURLShortener_HappyPath(t *testing.T) {
 		ContainsKey("alias")
 }
 
-//nolint:funlen
 func TestURLShortener_SaveRedirect(t *testing.T) {
 	testCases := []struct {
 		name  string
