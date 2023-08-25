@@ -26,7 +26,12 @@ func main() {
 
 	cfg := config.MustLoad()
 
-	log := setupLogger(cfg.Env)
+	log, err := setupLogger(cfg.Env, cfg.LoggerPath)
+
+	if err != nil {
+		os.Exit(1)
+	}
+
 	log.Info("starting simple-url-shortener", slog.String("env", cfg.Env))
 
 	//log.Info("info messages are enabled")
@@ -78,7 +83,7 @@ func main() {
 	log.Error("server stopped")
 }
 
-func setupLogger(env string) *slog.Logger {
+func setupLogger(env string, logFilePath string) (*slog.Logger, error) {
 	var log *slog.Logger
 	switch env {
 	case envLocal:
@@ -88,12 +93,16 @@ func setupLogger(env string) *slog.Logger {
 			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}),
 		)
 	case envProd:
+		file, err := os.OpenFile(logFilePath, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+		if err != nil {
+			return nil, err
+		}
 		log = slog.New(
-			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}),
+			slog.NewJSONHandler(file, &slog.HandlerOptions{Level: slog.LevelInfo}),
 		)
 	}
 
-	return log
+	return log, nil
 }
 
 func setupPrettySlog() *slog.Logger {
