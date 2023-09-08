@@ -1,0 +1,4 @@
+.border-gradient {
+  border-image: linear-gradient(to right, #059669, #f6ad55);
+  border-image-slice: 1;
+}
