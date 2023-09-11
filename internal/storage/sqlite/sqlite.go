@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-const DOMAIN = "https://sus.kz"
+const DOMAIN = "://sus.kz"
 
 type Storage struct {
 	db *sql.DB
