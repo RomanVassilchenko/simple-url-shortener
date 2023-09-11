@@ -6,7 +6,10 @@ import (
 	"fmt"
 	"github.com/mattn/go-sqlite3"
 	"simple-url-shortener/internal/storage"
+	"strings"
 )
+
+const DOMAIN = "https://sus.kz"
 
 type Storage struct {
 	db *sql.DB
@@ -42,6 +45,10 @@ func New(storagePath string) (*Storage, error) {
 
 func (s *Storage) SaveURL(urlToSave string, alias string) (int64, error) {
 	const op = "storage.sqlite.SaveURL"
+
+	if strings.Contains(urlToSave, DOMAIN) {
+		return 0, fmt.Errorf("%s: %w", op, storage.ErrURLExists)
+	}
 
 	stmt, err := s.db.Prepare(`INSERT INTO url(url, alias) VALUES (?,?)`)
 	if err != nil {
