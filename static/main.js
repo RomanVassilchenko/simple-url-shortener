@@ -5,7 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const copyButton = document.getElementById('openModalButton');
 
     cutButton.addEventListener('click', function () {
-        const url = urlInput.value.trim();
+        var url = urlInput.value.trim();
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            // Если отсутствует, добавляем "http://"
+            url = "https://" + url;
+        }
+
         if (url) {
             // Create a JSON object with the URL data
             const requestData = {url};
