@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"simple-url-shortener/internal/config"
+	"simple-url-shortener/internal/http-server/handlers/greeting"
 	"simple-url-shortener/internal/http-server/handlers/redirect"
 	"simple-url-shortener/internal/http-server/handlers/url/delete"
 	"simple-url-shortener/internal/http-server/handlers/url/save"
@@ -56,14 +57,21 @@ func main() {
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.URLFormat)
 
+	fs := http.FileServer(http.Dir("./static"))
+	router.Handle("/static/*", http.StripPrefix("/static/", fs))
+
 	router.Route("/url", func(r chi.Router) {
 		r.Use(middleware.BasicAuth("simple-url-shortener", map[string]string{
 			cfg.HTTPServer.User: cfg.HTTPServer.Password,
 		}))
 
-		r.Post("/", save.New(log, storage))
-		r.Delete("/{alias}", delete.New(log, storage))
+		//r.Post("/", save.New(log, storage))
+		//r.Delete("/{alias}", delete.New(log, storage))
 	})
+
+	router.Get("/", greeting.New(log, "./static"))
+	router.Post("/", save.New(log, storage))
+	router.Delete("/{alias}", delete.New(log, storage))
 	router.Get("/{alias}", redirect.New(log, storage))
 
 	log.Info("starting server", slog.String("address", cfg.Address))
