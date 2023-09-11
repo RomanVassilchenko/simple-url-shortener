@@ -37,7 +37,7 @@ The application should be accessible at `http://localhost:8082`.
 
 ### Creating a Short Alias for a URL
 
-To create a short alias for a URL, send a POST request to `/url` with a JSON body in the following format:
+To create a short alias for a URL, send a POST request to `/` with a JSON body in the following format:
 
 ```json
 {
@@ -50,7 +50,7 @@ To create a short alias for a URL, send a POST request to `/url` with a JSON bod
 To get a redirection to the original URL, send a GET request to /alias, where alias is the short alias you created earlier. The application will perform a redirect to the corresponding URL.
 
 ### Deleting an Alias
-To delete an alias from the database, send a DELETE request to /url/myalias, where myalias is the alias you want to delete.
+To delete an alias from the database, send a DELETE request to `/myalias`, where myalias is the alias you want to delete.
 
 ## Database
 The application uses an SQLite database to store aliases and their corresponding URLs. The database is created automatically on the first run of the application.
