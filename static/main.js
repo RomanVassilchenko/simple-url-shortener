@@ -15,6 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let url = urlInput.value.trim();
         let alias = aliasInput.value.trim()
 
+        if (!url.match(/^https?:\/\//i)) {
+            url = "https://" + url;
+        }
+
         if (isValidURL(url)) {
             // Create a JSON object with the URL data
             const requestData = {
