@@ -8,7 +8,7 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href="/static/index.css" />
-    <link rel="icon" href="/static/image/icon.ico" type="image/x-icon">
+    <link rel="icon" href="/static/image/icon.ico" type="image/x-icon" />
     <script src="/static/main.js"></script>
 
     <link
@@ -122,15 +122,39 @@
                 type="text"
                 placeholder="https://example.com/anything_here"
               />
+              <div class="hidden" id="advancedSettings">
+                <!--адвансед сеттингс-->
+                <label
+                  for="urlName"
+                  class="block text-blue-300 mt-6 py-2 font-bold mb-2"
+                >
+                  Type your custom URL:
+                </label>
+                <input
+                  class="shadow appearance-none border rounded w-full p-3 text-gray-700 leading-tight focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                  id="urlInput"
+                  type="text"
+                  placeholder="azaza"
+                />
+              </div>
             </div>
 
-            <div class="flex items-center justify-between pt-4">
+            <div
+              class="flex items-center justify-between text-sm lg:text-base pt-4"
+            >
               <button
                 id="cut"
-                class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                class="bg-gradient-to-r mr-10 lg:mr-0 from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-2 lg:px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                 type="button"
               >
                 Cut it down!
+              </button>
+              <button
+                id="advancedSettingsButton"
+                class="bg-gradient-to-r from-purple-800 to-green-500 hover:from-pink-500 hover:to-green-500 text-white font-bold py-2 px-2 lg:px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                type="button"
+              >
+                Advanced Settings
               </button>
             </div>
           </form>
@@ -236,19 +260,27 @@
         <div
           class="w-full text-gray-500 pt-16 pb-6 text-sm text-center md:text-left fade-in"
         >
-          <a class="no-underline hover:no-underline" href="#">&copy; SUS.KZ, 2023</a>
+          <a class="no-underline hover:no-underline" href="#"
+            >&copy; SUS.KZ, 2023</a
+          >
           - service by
           <a
-            class="no-underline hover:no-underline text-blue-400"
+            class="text-gray-500 no-underline hover:no-underline"
             href="https://github.com/RomanVassilchenko"
-            >Roman Vassilchenko</a>. Special thanks to
+            >Roman Vassilchenko
+          </a>
+          . Special thanks to
           <a
             class="no-underline hover:no-underline text-blue-400"
             href="https://github.com/vadimvalov"
-            >Vadim Valov</a> and <a
+            >Vadim Valov
+          </a>
+          and
+          <a
             href="https://github.com/SaraUlan"
-            class="no-underline hover:no-underline text-blue-400"
-          >Sara Ulan</a
+            class="text-gray-500 no-underline hover:no-underline"
+          >
+            Sara Ulan, 2023</a
           >
         </div>
       </div>
@@ -281,15 +313,34 @@
       modal.classList.add("hidden");
     });
     // modal window__close
+
+    const advancedSettings = document.getElementById("advancedSettings");
+    const advancedSettingsButton = document.getElementById(
+      "advancedSettingsButton"
+    );
+
+    advancedSettingsButton.addEventListener("click", function () {
+      advancedSettings.classList.toggle("hidden");
+      if (advancedSettings.classList.contains("hidden")) {
+        advancedSettingsButton.textContent = "Advanced Settings";
+      } else {
+        advancedSettingsButton.textContent = "Normal Settings";
+      }
+    });
   </script>
 
   <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EX4H5SNWB6"></script>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-EX4H5SNWB6"
+  ></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
-    gtag('config', 'G-EX4H5SNWB6');
+    gtag("config", "G-EX4H5SNWB6");
   </script>
 </html>
