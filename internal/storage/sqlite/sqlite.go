@@ -43,6 +43,65 @@ func New(storagePath string) (*Storage, error) {
 	return &Storage{db: db}, nil
 }
 
+// AliasExists checks whether the specified alias exists in the database.
+func (s *Storage) AliasExists(alias string) (bool, error) {
+	const op = "storage.sqlite.AliasExists"
+
+	stmt, err := s.db.Prepare(`SELECT COUNT(*) FROM url WHERE alias = ?`)
+	if err != nil {
+		return false, fmt.Errorf("%s: prepare statement %w", op, err)
+	}
+
+	var count int
+	err = stmt.QueryRow(alias).Scan(&count)
+	if err != nil {
+		return false, fmt.Errorf("%s: execute statement: %w", op, err)
+	}
+
+	return count > 0, nil
+}
+
+// URLExists checks whether the specified URL exists in the database.
+func (s *Storage) URLExists(urlToCheck string) (bool, error) {
+	const op = "storage.sqlite.URLExists"
+
+	stmt, err := s.db.Prepare(`SELECT COUNT(*) FROM url WHERE url = ?`)
+	if err != nil {
+		return false, fmt.Errorf("%s: prepare statement %w", op, err)
+	}
+
+	var count int
+	err = stmt.QueryRow(urlToCheck).Scan(&count)
+	if err != nil {
+		return false, fmt.Errorf("%s: execute statement: %w", op, err)
+	}
+
+	return count > 0, nil
+}
+
+// GetAliasByURL retrieves the alias associated with a given URL from the database.
+func (s *Storage) GetAliasByURL(urlToFind string) (string, error) {
+	const op = "storage.sqlite.GetAliasByURL"
+
+	stmt, err := s.db.Prepare(`SELECT alias FROM url WHERE url = ?`)
+	if err != nil {
+		return "", fmt.Errorf("%s: prepare statement %w", op, err)
+	}
+
+	var alias string
+	err = stmt.QueryRow(urlToFind).Scan(&alias)
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return "", storage.ErrURLNotFound
+		}
+
+		return "", fmt.Errorf("%s: execute statement: %w", op, err)
+	}
+
+	return alias, nil
+}
+
 func (s *Storage) SaveURL(urlToSave string, alias string) (int64, error) {
 	const op = "storage.sqlite.SaveURL"
 

@@ -1,20 +1,25 @@
 document.addEventListener('DOMContentLoaded', function () {
     const cutButton = document.getElementById('cut');
     const urlInput = document.getElementById('urlInput');
+    const aliasInput = document.getElementById('aliasInput');
     const urlOutput = document.getElementById('urlOutput');
     const copyButton = document.getElementById('openModalButton');
 
+    function isValidURL(url) {
+        // Regular expression to validate a URL
+        const urlRegex = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w.-]*)*\/?(\?[^\s]*)?$/;
+        return urlRegex.test(url);
+    }
+
     cutButton.addEventListener('click', function () {
-        var url = urlInput.value.trim();
+        let url = urlInput.value.trim();
+        let alias = aliasInput.value.trim()
 
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            // Если отсутствует, добавляем "http://"
-            url = "https://" + url;
-        }
-
-        if (url) {
+        if (isValidURL(url)) {
             // Create a JSON object with the URL data
-            const requestData = {url};
+            const requestData = {
+                url:url, alias:alias
+            };
 
             // Make the AJAX POST request
             fetch('/', {

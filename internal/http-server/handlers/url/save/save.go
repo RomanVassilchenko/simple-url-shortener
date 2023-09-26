@@ -29,6 +29,9 @@ const aliasLength = 6
 //go:generate go run github.com/vektra/mockery/v2@v2.28.2 --name=URLSaver
 type URLSaver interface {
 	SaveURL(urlToSave string, alias string) (int64, error)
+	AliasExists(alias string) (bool, error)
+	URLExists(urlToCheck string) (bool, error)
+	GetAliasByURL(urlToFind string) (string, error)
 }
 
 func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
@@ -55,7 +58,8 @@ func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
 		log.Info("request body decoded", slog.Any("request", req))
 
 		if err := validator.New().Struct(req); err != nil {
-			validateErr := err.(validator.ValidationErrors)
+			var validateErr validator.ValidationErrors
+			errors.As(err, &validateErr)
 
 			log.Error("invalid request", sl.Err(err))
 
@@ -66,8 +70,47 @@ func New(log *slog.Logger, urlSaver URLSaver) http.HandlerFunc {
 
 		alias := req.Alias
 		if alias == "" {
-			//TODO Check that new alias doesn't exist
-			alias = random.NewRandomString(aliasLength)
+
+			exists, err := urlSaver.URLExists(req.URL)
+			if err != nil {
+				log.Error("failed to check that URL exists in DB", sl.Err(err))
+				render.JSON(w, r, resp.Error("failed to check that URL exists in DB"))
+				return
+			}
+
+			if exists {
+				alias, err = urlSaver.GetAliasByURL(req.URL)
+				if err != nil {
+					log.Error("failed to get alias connected to URL", sl.Err(err))
+					render.JSON(w, r, resp.Error("failed to get alias connected to URL"))
+					return
+				}
+
+				responseOK(w, r, alias)
+				return
+			}
+
+			const maxAttempts = 64 // Maximum number of generation attempts
+			exists = true
+
+			for attempt := 1; attempt <= maxAttempts; attempt++ {
+				alias = random.NewRandomString(aliasLength)
+				exists, err = urlSaver.AliasExists(alias)
+				if err != nil {
+					log.Error("failed to generate alias", sl.Err(err))
+					render.JSON(w, r, resp.Error("failed to generate url"))
+					return
+				}
+				if !exists {
+					break
+				}
+			}
+
+			if exists {
+				log.Error("The number of attempts to create an alias has been exceeded", sl.Err(err))
+				render.JSON(w, r, resp.Error("The number of attempts to create an alias has been exceeded. Try again after a while"))
+				return
+			}
 		}
 
 		id, err := urlSaver.SaveURL(req.URL, alias)
