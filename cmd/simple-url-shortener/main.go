@@ -59,7 +59,9 @@ func main() {
 
 	fs := http.FileServer(http.Dir("./static"))
 	router.Handle("/static/*", http.StripPrefix("/static/", fs))
-	router.Handle("/static/web/*", http.StripPrefix("/static/", fs))
+
+	fsWeb := http.FileServer(http.Dir("./static/web"))
+	router.Handle("/web/*", http.StripPrefix("/web/", fsWeb))
 
 	router.Route("/url", func(r chi.Router) {
 		r.Use(middleware.BasicAuth("simple-url-shortener", map[string]string{
