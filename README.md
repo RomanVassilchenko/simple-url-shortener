@@ -46,10 +46,10 @@ To create a short alias for a URL, send a POST request to `/` with a JSON body i
 }
 ```
 
-### Getting Redirection
+### Getting Redirection (Outdated)
 To get a redirection to the original URL, send a GET request to /alias, where alias is the short alias you created earlier. The application will perform a redirect to the corresponding URL.
 
-### Deleting an Alias
+### Deleting an Alias (Outdated)
 To delete an alias from the database, send a DELETE request to `/myalias`, where myalias is the alias you want to delete.
 
 ## Database
