@@ -11,7 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      HOST: root@195.49.212.116
+      HOST: root@sus.kz
       DEPLOY_DIRECTORY: /home/sus/simple-url-shortener
       CONFIG_PATH: /home/sus/simple-url-shortener/config/prod.yaml
       ENV_FILE_PATH: /home/sus/simple-url-shortener/config.env
