@@ -23,10 +23,10 @@ jobs:
           ref: ${{ github.event.inputs.tag }}
       - name: Check if tag exists
         run: |
-          git fetch --all --tags
-          if ! git tag | grep -q "^${{ github.event.inputs.tag }}$"; then
-            echo "error: Tag '${{ github.event.inputs.tag }}' not found"
-            exit 1
+          sudo git fetch --all --tags
+          if ! sudo git tag | sudo grep -q "^${{ github.event.inputs.tag }}$"; then
+            sudo echo "error: Tag '${{ github.event.inputs.tag }}' not found"
+            sudo exit 1
           fi
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -34,35 +34,35 @@ jobs:
           go-version: 1.20.2
       - name: Build app
         run: |
-          go mod download
-          go build -o simple-url-shortener ./cmd/simple-url-shortener
+          sudo go mod download
+          sudo go build -o simple-url-shortener ./cmd/simple-url-shortener
       - name: Deploy to VM
         run: |
           sudo apt-get install -y ssh rsync
-          echo "$DEPLOY_SSH_KEY" > deploy_key.pem
-          chmod 600 deploy_key.pem
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "mkdir -p ${{ env.DEPLOY_DIRECTORY }}"
-          rsync -avz -e 'ssh -i deploy_key.pem -o StrictHostKeyChecking=no' --exclude='.git' ./ ${{ env.HOST }}:${{ env.DEPLOY_DIRECTORY }}
+          sudo echo "$DEPLOY_SSH_KEY" > deploy_key.pem
+          sudo chmod 600 deploy_key.pem
+          sudo ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mkdir -p ${{ env.DEPLOY_DIRECTORY }}"
+          sudo rsync -avz -e 'ssh -i deploy_key.pem -o StrictHostKeyChecking=no' --exclude='.git' ./ ${{ env.HOST }}:${{ env.DEPLOY_DIRECTORY }}
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
       - name: Remove old systemd service file
         run: |
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo rm -f /etc/systemd/system/simple-url-shortener.service"
+          sudo ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo rm -f /etc/systemd/system/simple-url-shortener.service"
       - name: List workspace contents
         run: |
-          echo "Listing deployment folder contents:"
-          ls -la ${{ github.workspace }}/deployment
+          sudo echo "Listing deployment folder contents:"
+          sudo ls -la ${{ github.workspace }}/deployment
       - name: Create environment file on server
         run: |
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
-          touch ${{ env.ENV_FILE_PATH }} && \
-          chmod 600 ${{ env.ENV_FILE_PATH }} && \
-          echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
-          echo 'HTTP_SERVER_PASSWORD=${{ secrets.AUTH_PASS }}' >> ${{ env.ENV_FILE_PATH }}"
+          sudo ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
+          sudo touch ${{ env.ENV_FILE_PATH }} && \
+          sudo chmod 600 ${{ env.ENV_FILE_PATH }} && \
+          sudo echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
+          sudo echo 'HTTP_SERVER_PASSWORD=${{ secrets.AUTH_PASS }}' >> ${{ env.ENV_FILE_PATH }}"
       - name: Copy systemd service file
         run: |
-          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/simple-url-shortener.service ${{ env.HOST }}:/tmp/simple-url-shortener.service
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/simple-url-shortener.service /etc/systemd/system/simple-url-shortener.service"
+          sudo scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/simple-url-shortener.service ${{ env.HOST }}:/tmp/simple-url-shortener.service
+          sudo ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/simple-url-shortener.service /etc/systemd/system/simple-url-shortener.service"
       - name: Start application
         run: |
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo systemctl daemon-reload && sudo systemctl restart simple-url-shortener.service"
+          sudo ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo systemctl daemon-reload && sudo systemctl restart simple-url-shortener.service"
