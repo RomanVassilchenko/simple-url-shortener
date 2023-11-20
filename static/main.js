@@ -36,8 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.status === 'OK' && data.alias) {
+                        const currentOrigin = window.location.origin;
                         // Update the output input text with the shortened URL
-                        urlOutput.value = `https://sus.kz/${data.alias}`;
+                        urlOutput.value = `${currentOrigin}/${data.alias}`;
                     } else {
                         alert('Failed to shorten the URL. Error: ' + data.error);
                     }

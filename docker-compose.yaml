@@ -30,4 +30,4 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./storage/pg-data:/pg-data
+      - .storage/data:/home/postgres/pgdata
