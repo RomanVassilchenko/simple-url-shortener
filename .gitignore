@@ -1,2 +1,4 @@
 /storage/storage.db
 ./log.log
+.env
+.idea
