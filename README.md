@@ -31,7 +31,7 @@ This project is a simple URL shortener written in Go and uses the Chi library fo
     go build -o simple-url-shortener ./cmd/simple-url-shortener
     ```
 
-The application should be accessible at `http://localhost:8082`.
+The application should be accessible at `http://localhost:8083`.
 
 ## Usage
 

@@ -1,0 +1,32 @@
+version: '3.9'
+services:
+
+  simple-url-shortener:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      CONFIG_PATH: ./config/prod.yaml
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      HTTP_SERVER_PASSWORD: ${HTTP_SERVER_PASSWORD}
+      POSTGRES_URL: postgres
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+    command: [ "./simple-url-shortener" ]
+
+
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./storage/postgres-data:/var/lib/postgresql/data

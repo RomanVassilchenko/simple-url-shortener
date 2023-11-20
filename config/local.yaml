@@ -1,8 +1,11 @@
 env: "local" # local, dev, prod
-storage_path: "./storage/storage.db"
 http_server:
-  address: "localhost:8082"
+  address: "localhost:8083"
   timeout: 4s
   idle_timeout: 60s
   user: "myuser"
   password: "mypass"
+database_credentials:
+    host: "localhost"
+    port: 5432
+    name: "test"

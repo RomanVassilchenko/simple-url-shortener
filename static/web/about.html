@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>About us</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+
+    <link
+      href="https://unpkg.com/@tailwindcss/custom-forms/dist/custom-forms.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      html,
+      body {
+        position: relative;
+        height: 100%;
+      }
+
+      body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      swiper-container {
+        width: 100%;
+        height: 100%;
+      }
+
+      swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      swiper-slide img {
+        display: block;
+        width: 75%;
+        height: 75%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body
+    class="leading-normal tracking-normal text-indigo-400 m-6 bg-cover bg-fixed"
+    style="background-image: url('/image/header.jpg')"
+  >
+    <!--Nav-->
+    <div class="w-full container mx-auto">
+      <div class="w-full flex items-center justify-between">
+        <a
+          class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+          href="#"
+        >
+          Simple.URL
+          <span
+            class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-pink-500 to-purple-500"
+          >
+            .Shortener</span
+          >
+        </a>
+
+        <div class="flex w-1/2 justify-end content-center">
+          <a
+            class="inline-block text-blue-300 no-underline hover:text-pink-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
+            href="https://github.com/RomanVassilchenko/simple-url-shortener"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="currentColor"
+              class="bi bi-github"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+              />
+            </svg>
+          </a>
+
+          <!-- <a class="inline-block text-blue-300 no-underline hover:text-pink-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
+            href="https://www.facebook.com/sharer/sharer.php?u=#">
+            <svg class="fill-current h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+              <path d="M19 6h5V0h-5c-3.86 0-7 3.14-7 7v3H8v6h4v16h6V16h5l1-6h-6V7c0-.542.458-1 1-1z"></path>
+            </svg>
+          </a> -->
+        </div>
+        <h1 class="text-xl font-bold"><a href="./about.html">About</a></h1>
+        <h1 class="text-xl font-bold"><a href="api.html">API</a></h1>
+      </div>
+    </div>
+    <div class="h-96 w-96 mx-auto mt-20">
+      <swiper-container class="mySwiper" navigation="true">
+        <swiper-slide class="rounded-xl flex flex-col"
+          ><img src="../image/roman.jpg" class="rounded-lg" />
+          <h1 class="mt-4">Backend + Frontend dev</h1></swiper-slide
+        >
+        <swiper-slide class="rounded-xl flex flex-col"
+          ><img src="../image/vadim.JPG" class="rounded-lg" />
+          <h1 class="mt-4">Frontend dev</h1></swiper-slide
+        >
+        <swiper-slide class="rounded-xl flex flex-col"
+          ><img src="../image/planet.jpg" class="rounded-lg" />
+          <h1 class="mt-4">Ocean Planet corp.</h1></swiper-slide
+        >
+        <swiper-slide class="rounded-xl"
+          >Wanna be here? Contact us</swiper-slide
+        >
+      </swiper-container>
+    </div>
+    <div class="mt-10 bg-black rounded-xl p-8 mx-auto mb-10">
+      <h1 class="font-bold text-xl">About us?</h1>
+      <p>
+        We're just <strong>AITU</strong> students. lorem ipsum asdf tgyh ty gdsg
+        fdgd sdaf sdfiu dfs sdifg usdfg sdfg djfkghsfg sdfg kjsdfg sdfgkh sdfg
+        sdfg jkdfsg dfg fgk jfg fg dfg kjdfg sdfg jksdf gsdfg jks dfg sdfgjk
+        sdfg sdfg jkdf gsdfg sdfjkg sdfg sdfg jskdfg sdfg sdjkfgh sdfg dfg
+        sjdfgsdfg sfgsd fgsdf
+      </p>
+      <h2 class="font-bold text-lg">but also...</h2>
+      <p>
+        fdgd sdaf sdfiu dfs sdifg usdfg sdfg djfkghsfg sdfg kjsdfg sdfgkh sdfg
+        sdfg jkdfsg dfg fgk jfg fg dfg kjdfg sdfg jksdf gsdfg jks dfg sdfgjk
+        sdfg sdfg jkdf gsdfg sdfjkg sdfg sdfg jskdfg sdfg sdjkfgh sdfg dfg
+        sjdfgsdfg sfgsd fgsdf fdgd sdaf sdfiu dfs sdifg usdfg sdfg djfkghsfg
+        sdfg kjsdfg sdfgkh sdfg sdfg jkdfsg dfg fgk jfg fg dfg kjdfg sdfg jksdf
+        gsdfg jks dfg sdfgjk sdfg sdfg jkdf gsdfg sdfjkg sdfg sdfg jskdfg sdfg
+        sdjkfgh sdfg dfg sjdfgsdfg sfgsd fgsdf fdgd sdaf sdfiu dfs sdifg usdfg
+        sdfg djfkghsfg sdfg kjsdfg sdfgkh sdfg sdfg jkdfsg dfg fgk jfg fg dfg
+        kjdfg sdfg jksdf gsdfg jks dfg sdfgjk sdfg sdfg jkdf gsdfg sdfjkg sdfg
+        sdfg jskdfg sdfg sdjkfgh sdfg dfg sjdfgsdfg sfgsd fgsdf fdgd sdaf sdfiu
+        dfs sdifg usdfg sdfg djfkghsfg sdfg kjsdfg sdfgkh sdfg sdfg jkdfsg dfg
+        fgk jfg fg dfg kjdfg sdfg jksdf gsdfg jks dfg sdfgjk sdfg sdfg jkdf
+        gsdfg sdfjkg sdfg sdfg jskdfg sdfg sdjkfgh sdfg dfg sjdfgsdfg sfgsd
+        fgsdf
+      </p>
+    </div>
+
+    <!--Footer-->
+    <div
+      class="w-full text-gray-500 pt-16 pb-6 text-sm text-center md:text-left fade-in"
+    >
+      <a class="no-underline hover:no-underline" href="#"
+        >&copy; SUS.KZ, 2023</a
+      >
+      - service by
+      <a
+        class="text-gray-500 no-underline hover:no-underline"
+        href="https://github.com/RomanVassilchenko"
+        >Roman Vassilchenko
+      </a>
+      . Special thanks to
+      <a
+        class="no-underline hover:no-underline text-blue-400"
+        href="https://github.com/vadimvalov"
+        >Vadim Valov
+      </a>
+      and
+      <a
+        href="https://github.com/SaraUlan"
+        class="text-gray-500 no-underline hover:no-underline"
+      >
+        Sara Ulan, 2023</a
+      >
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-element-bundle.min.js"></script>
+  </body>
+</html>

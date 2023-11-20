@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HOST: ubuntu@195.49.212.116
-      DEPLOY_DIRECTORY: /home/ubuntu/simple-url-shortener
-      CONFIG_PATH: /home/ubuntu/simple-url-shortener/config/prod.yaml
-      ENV_FILE_PATH: /home/ubuntu/simple-url-shortener/config.env
+      DEPLOY_DIRECTORY: /home/ubuntu/apps/simple-url-shortener
+      CONFIG_PATH: /home/ubuntu/apps/simple-url-shortener/config/prod.yaml
+      ENV_FILE_PATH: /home/ubuntu/apps/simple-url-shortener/config.env
 
     steps:
       - name: Checkout repository
