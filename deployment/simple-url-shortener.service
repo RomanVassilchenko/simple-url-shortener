@@ -4,12 +4,12 @@ After=network.target
 
 [Service]
 User=ubuntu
-WorkingDirectory=/home/ubuntu/apps/simple-url-shortener
-ExecStart=/home/ubuntu/apps/simple-url-shortener/simple-url-shortener
+WorkingDirectory=/home/ubuntu/simple-url-shortener
+ExecStart=/home/ubuntu/simple-url-shortener/simple-url-shortener
 Restart=always
 RestartSec=4
 StandardOutput=inherit
-EnvironmentFile=/home/ubuntu/apps/simple-url-shortener/config.env
+EnvironmentFile=/home/ubuntu/simple-url-shortener/config.env
 
 [Install]
 WantedBy=multi-user.target
