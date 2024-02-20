@@ -2,9 +2,7 @@ version: '3.9'
 services:
 
   simple-url-shortener:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: romanvassilchenko/simple-url-shortener:latest
     restart: always
     environment:
       CONFIG_PATH: ./config/prod.yaml
